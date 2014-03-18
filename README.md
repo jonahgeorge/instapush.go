@@ -7,7 +7,7 @@ Allows you to send custom Push notifications to your Android/iOS device.<br/>
 Experimental API, may subject to change.
 
 ## Documentation
-http://godoc.org/github.com/jonahgeorge/go-instapush
+http://godoc.org/github.com/jonahgeorge/instapush
 
 ## Installation
 `go get github.com/jonahgeorge/instapush`
@@ -30,6 +30,19 @@ func main() {
       fmt.Printf("id: %s\n", value.Id)
       fmt.Printf("secret: %s\n", value.Secret)
   }
+
+  trackers := map[string]interface{}{
+      "First Name": "James",
+      "Last Name":  "Bond",
+  }
+
+  // [todo] - better way to select apps
+  b, e := apps[0].Send("Sign_Up", trackers)
+  if e != nil {
+      log.Fatal(e)
+  }
+
+  fmt.Printf("%s\n", b)
 }
 ```
 
