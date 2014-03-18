@@ -4,11 +4,7 @@ Unofficial implementation of the Instapush API in Golang.<br/>
 Experimental API, subject to change.
 
 ## Documentation
-`func NewClient(token string) Client` 
-
-`func (c Client) ListApps() ([]Apps, error)`
-
-`func (a App) ListEvents() ([]byte, error)`
+http://godoc.org/github.com/jonahgeorge/go-instapush
 
 ## Setup
 
