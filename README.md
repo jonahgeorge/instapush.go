@@ -10,15 +10,12 @@ Allows you to send custom Push notifications to your Android/iOS device.<br/>
 import "github.com/jonahgeorge/instapush"
 
 func main() {
-  client := instapush.NewClient("INSTAPUSH_USER_TOKEN")
-  app, err := client.RetrieveApp("INSTAPUSH_APP_NAME")
-  // Handle error
+  app := instapush.App{Id: "INSTAPUSH_APP_ID", Secret: "INSTAPUSH_APP_SECERT"}
 
-  res, err := app.Send("SignUp", map[string]interface{}{
+  app.Send("SignUp", map[string]interface{}{
       "First Name": "James",
       "Last Name":  "Bond",
   })
-  // Handle error
 }
 ```
 
