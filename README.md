@@ -1,16 +1,10 @@
-# instapush [![wercker status](https://app.wercker.com/status/2aa99fba574aaf114e73c78b690d68ea/s/ "wercker status")](https://app.wercker.com/project/bykey/2aa99fba574aaf114e73c78b690d68ea)
+# instapush [![wercker status](https://app.wercker.com/status/2aa99fba574aaf114e73c78b690d68ea/s/ "wercker status")](https://app.wercker.com/project/bykey/2aa99fba574aaf114e73c78b690d68ea) [![GoDoc](https://godoc.org/github.com/jonahgeorge/instapush?status.png)](https://godoc.org/github.com/jonahgeorge/instapush)
 
 Unofficial implementation of the [Instapush](https://instapush.im/) API in Golang.<br/>
 Allows you to send custom Push notifications to your Android/iOS device.<br/>
 
 <br/>
 Experimental API, may subject to change.
-
-## Documentation
-http://godoc.org/github.com/jonahgeorge/instapush
-
-## Installation
-`go get github.com/jonahgeorge/instapush`
 
 ## Usage
 ``` go
@@ -19,16 +13,14 @@ package main
 import (
   "fmt"
   "github.com/jonahgeorge/instapush"
+  "log"
 )
 
 func main() {
-  client := instapush.NewClient("USER_TOKEN")
-  apps, _ := client.ListApps()
-
-  for _, value := range apps {
-      fmt.Printf("title: %s\n", value.Title)
-      fmt.Printf("id: %s\n", value.Id)
-      fmt.Printf("secret: %s\n", value.Secret)
+  client := instapush.NewClient("INSTAPUSH_USER_TOKEN")
+  app, err := client.RetrieveApp("INSTAPUSH_APP_NAME")
+  if err != nil {
+    log.Fatal(err)
   }
 
   trackers := map[string]interface{}{
@@ -36,13 +28,12 @@ func main() {
       "Last Name":  "Bond",
   }
 
-  // [todo] - better way to select apps
-  b, e := apps[0].Send("Sign_Up", trackers)
-  if e != nil {
-      log.Fatal(e)
+  res, err := app.Send("SignUp", trackers)
+  if err != nil {
+      log.Fatal(err)
   }
 
-  fmt.Printf("%s\n", b)
+  fmt.Printf("%s\n", res)
 }
 ```
 
