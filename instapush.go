@@ -30,13 +30,6 @@ type Response struct {
 	Status  int    `json:"status"`
 }
 
-// Return a client that can be used to query a list of apps and create an app
-func NewClient(token string) Client {
-	var c Client
-	c.Token = token
-	return c
-}
-
 // Returns a list of apps associated with the user token
 func (c Client) ListApps() ([]App, error) {
 	resource := endpoint + "apps/list"
