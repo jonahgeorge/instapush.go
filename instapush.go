@@ -3,6 +3,7 @@ package instapush
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -23,23 +24,20 @@ type App struct {
 	Secret string `json:"appSecret"`
 }
 
-type Tracker struct {
-	key   string
-	value string
-}
-
 type Response struct {
 	Message string `json:"msg"`
 	Error   bool   `json:"error"`
 	Status  int    `json:"status"`
 }
 
+// Return a client that can be used to query a list of apps and create an app
 func NewClient(token string) Client {
 	var c Client
 	c.Token = token
 	return c
 }
 
+// Returns a list of apps associated with the user token
 func (c Client) ListApps() ([]App, error) {
 	resource := endpoint + "apps/list"
 
@@ -65,12 +63,29 @@ func (c Client) ListApps() ([]App, error) {
 	return apps, err
 }
 
+// Returns the app that matches the title argument
+func (c Client) RetrieveApp(title string) (App, error) {
+	apps, err := c.ListApps()
+	if err != nil {
+		return App{}, err
+	}
+
+	for key, _ := range apps {
+		if apps[key].Title == title {
+			return apps[key], err
+		}
+	}
+
+	return App{}, errors.New("App '" + title + "' not found.")
+}
+
+// Not yet implemented
 func (c Client) AddApp() ([]byte, error) {
-	// todo
 	//resource := endpoint + "apps/add"
 	return nil, nil
 }
 
+// Returns a list of events for the app
 func (a App) ListEvents() ([]byte, error) {
 	resource := endpoint + "events/list"
 
@@ -86,12 +101,13 @@ func (a App) ListEvents() ([]byte, error) {
 	return contents, err
 }
 
+// Not yet implemented
 func (a App) AddEvent() ([]byte, error) {
-	// todo
 	//resource := endpoint + "events/add"
 	return nil, nil
 }
 
+// Send a new push notification that matches the string argument. The tracker fills the arguments for the event.
 func (a App) Send(event string, trackers interface{}) ([]byte, error) {
 	resource := endpoint + "post"
 
