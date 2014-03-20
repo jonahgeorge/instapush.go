@@ -1,3 +1,18 @@
+// Package instapush is an easy interface to the Instapush API in Golang.
+//
+//  package main
+//
+//  import "github.com/jonahgeorge/instapush"
+//
+//  func main() {
+//    app := instapush.App{Id: "INSTAPUSH_APP_ID", Secret: "INSTAPUSH_APP_SECERT"}
+//
+//    app.Send("SignUp", map[string]interface{}{
+//      "First Name": "James",
+//      "Last Name":  "Bond",
+//    })
+//  }
+
 package instapush
 
 import (
