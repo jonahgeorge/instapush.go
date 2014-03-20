@@ -5,7 +5,7 @@ Allows you to send custom Push notifications to your Android/iOS device.<br/>
 
 <ins>Experimental API, may be subject to change.</ins>
 
-## Usage
+## Basic Usage
 ``` go
 import "github.com/jonahgeorge/instapush"
 
@@ -17,6 +17,61 @@ func main() {
       "Last Name":  "Bond",
   })
 }
+```
+
+### Creating an application
+``` go
+  client := instapush.Client{Token: "INSTAPUSH_USER_TOKEN"}
+
+  // returns the json response with title, id, secret, and status
+  // later iteration will return an app{}
+  res, err := client.AddApp("NEW_APP_NAME")
+```
+
+### Listing applications
+``` go
+  client := instapush.Client{Token: "INSTAPUSH_USER_TOKEN"}
+
+  // returns a slice of apps
+  []apps, err := client.ListApps()
+```
+
+### Retrieving an application
+``` go
+  client := instapush.Client{Token: "INSTAPUSH_USER_TOKEN"}
+
+  // returns an app{}
+  app, err := client.FindApp("INSTAPUSH_APP_TITLE")
+```
+
+### Creating an event
+``` go
+  app := instapush.App{Id: "INSTAPUSH_APP_ID", Secret: "INSTAPUSH_APP_SECERT"}
+
+  res, err := app.AddEvent("SignUp", []string{"First Name", "Last Name", "{First Name} {Last Name} signed up for your app!")
+
+  fmt.Printf("%s\n", res)
+```
+
+### Listing events
+``` go
+  app := instapush.App{Id: "INSTAPUSH_APP_ID", Secret: "INSTAPUSH_APP_SECERT"}
+
+  res, err := app.ListEvents()
+
+  fmt.Printf("%s\n", res)
+```
+
+### Sending a notification
+``` go
+  app := instapush.App{Id: "INSTAPUSH_APP_ID", Secret: "INSTAPUSH_APP_SECERT"}
+
+  res, err := app.Send("SignUp", map[string]interface{}{
+      "First Name": "James",
+      "Last Name":  "Bond",
+  })
+
+  fmt.Printf("%s\n", res)
 ```
 
 ## License
