@@ -1,7 +1,6 @@
 # instapush 
 [![GoDoc](https://godoc.org/github.com/jonahgeorge/instapush?status.png)](https://godoc.org/github.com/jonahgeorge/instapush) 
 [![Build Status](https://travis-ci.org/jonahgeorge/instapush.svg)](https://travis-ci.org/jonahgeorge/instapush)
-[![Progress Status](http://progressed.io/bar/100)]()
 
 Unofficial implementation of the [Instapush](https://instapush.im/) API v1 in Golang.<br/>
 Send custom push notifications to your Android/iOS device.<br/>
